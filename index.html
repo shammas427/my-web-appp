@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web App with Dark Mode</title>
+    <title>Persistent Web App</title>
     <style>
-        /* CSS Variables for easy switching */
         :root {
             --bg: #f8fafc;
             --card-bg: #ffffff;
@@ -13,7 +12,6 @@
             --primary: #2563eb;
         }
 
-        /* Dark Mode variables */
         [data-theme="dark"] {
             --bg: #0f172a;
             --card-bg: #1e293b;
@@ -29,16 +27,16 @@
             place-content: center;
             height: 100vh;
             margin: 0;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
             text-align: center;
-            width: 320px;
+            width: 300px;
         }
 
         button {
@@ -48,52 +46,68 @@
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
             font-weight: 600;
-            margin: 10px 0;
         }
 
         #themeToggle {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
-            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <button id="themeToggle">Switch to Dark Mode</button>
-        <hr style="opacity: 0.2; margin: 20px 0;">
-        <h2>Simple App</h2>
-        <div id="counter" style="font-size: 2rem; font-weight: bold;">0</div>
-        <button id="incrementBtn">Increase Count</button>
+        <button id="themeToggle">Dark Mode</button>
+        <h2 id="counter">0</h2>
+        <button id="incrementBtn">Count Up</button>
+        <button id="resetBtn" style="background: #ef4444;">Reset Data</button>
     </div>
 
     <script>
         const themeToggle = document.getElementById('themeToggle');
-        const incrementBtn = document.getElementById('incrementBtn');
         const counterDisplay = document.getElementById('counter');
-        let count = 0;
+        
+        // 1. LOAD DATA ON STARTUP
+        let count = localStorage.getItem('myCount') || 0;
+        let savedTheme = localStorage.getItem('myTheme') || 'light';
 
-        // Theme Toggle Logic
+        // Apply loaded data
+        counterDisplay.innerText = count;
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.innerText = 'Light Mode';
+        }
+
+        // 2. THEME TOGGLE WITH SAVING
         themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
                 document.documentElement.removeAttribute('data-theme');
-                themeToggle.innerText = 'Switch to Dark Mode';
+                themeToggle.innerText = 'Dark Mode';
+                localStorage.setItem('myTheme', 'light');
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.innerText = 'Switch to Light Mode';
+                themeToggle.innerText = 'Light Mode';
+                localStorage.setItem('myTheme', 'dark');
             }
         });
 
-        // Counter Logic
-        incrementBtn.addEventListener('click', () => {
+        // 3. COUNTER WITH SAVING
+        document.getElementById('incrementBtn').addEventListener('click', () => {
             count++;
             counterDisplay.innerText = count;
+            localStorage.setItem('myCount', count);
+        });
+
+        // 4. RESET BUTTON
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            localStorage.clear();
+            location.reload(); // Refresh page to reset UI
         });
     </script>
-
 </body>
 </html>

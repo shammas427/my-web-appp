@@ -3,116 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Persistent Web App</title>
+    <title>Miuxoo PWA</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #1e293b;
-            --primary: #2563eb;
+            --accent: #2563eb; /* Dynamic Accent Color */
         }
 
         [data-theme="dark"] {
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text: #f8fafc;
-            --primary: #60a5fa;
         }
 
         body { 
-            font-family: system-ui, sans-serif; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
             background: var(--bg); 
             color: var(--text);
-            display: grid;
-            place-content: center;
-            height: 100vh;
             margin: 0;
-            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: 0.3s;
         }
 
+        .container { width: 90%; max-width: 400px; padding: 20px; }
+        
         .card {
             background: var(--card-bg);
             padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             text-align: center;
-            width: 300px;
+            margin-bottom: 20px;
         }
 
         button {
-            background: var(--primary);
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
             cursor: pointer;
-            width: 100%;
-            margin-bottom: 10px;
             font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        #themeToggle {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
         }
+
+        .settings-grid { display: flex; gap: 10px; justify-content: center; margin: 15px 0; }
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid white; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <button id="themeToggle">Dark Mode</button>
-        <h2 id="counter">0</h2>
-        <button id="incrementBtn">Count Up</button>
-        <button id="resetBtn" style="background: #ef4444;">Reset Data</button>
+    <div class="container">
+        <div class="card">
+            <h1 id="counter">0</h1>
+            <button id="incrementBtn">Tap to Count</button>
+            <button id="themeToggle" style="background:transparent; color:var(--accent); border: 2px solid var(--accent);">Toggle Theme</button>
+        </div>
+
+        <div class="card">
+            <h3>Customization</h3>
+            <p>Choose Accent Color:</p>
+            <div class="settings-grid">
+                <div class="color-dot" style="background: #2563eb;" onclick="setAccent('#2563eb')"></div>
+                <div class="color-dot" style="background: #db2777;" onclick="setAccent('#db2777')"></div>
+                <div class="color-dot" style="background: #059669;" onclick="setAccent('#059669')"></div>
+                <div class="color-dot" style="background: #7c3aed;" onclick="setAccent('#7c3aed')"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Contact Me</h3>
+            <form action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
     </div>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const counterDisplay = document.getElementById('counter');
+        // 1. DATA PERSISTENCE
+        let count = localStorage.getItem('mxCount') || 0;
+        let accent = localStorage.getItem('mxAccent') || '#2563eb';
         
-        // 1. LOAD DATA ON STARTUP
-        let count = localStorage.getItem('myCount') || 0;
-        let savedTheme = localStorage.getItem('myTheme') || 'light';
-
-        // Apply loaded data
+        const counterDisplay = document.getElementById('counter');
         counterDisplay.innerText = count;
-        if (savedTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.innerText = 'Light Mode';
-        }
+        document.documentElement.style.setProperty('--accent', accent);
 
-        // 2. THEME TOGGLE WITH SAVING
-        themeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                themeToggle.innerText = 'Dark Mode';
-                localStorage.setItem('myTheme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.innerText = 'Light Mode';
-                localStorage.setItem('myTheme', 'dark');
-            }
-        });
-
-        // 3. COUNTER WITH SAVING
+        // 2. COUNTER LOGIC
         document.getElementById('incrementBtn').addEventListener('click', () => {
             count++;
             counterDisplay.innerText = count;
-            localStorage.setItem('myCount', count);
+            localStorage.setItem('mxCount', count);
         });
 
-        // 4. RESET BUTTON
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            localStorage.clear();
-            location.reload(); // Refresh page to reset UI
+        // 3. THEME TOGGLE
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('mxTheme', isDark ? 'light' : 'dark');
         });
+
+        // 4. DYNAMIC ACCENT COLOR
+        function setAccent(color) {
+            document.documentElement.style.setProperty('--accent', color);
+            localStorage.setItem('mxAccent', color);
+        }
+
+        // 5. SERVICE WORKER
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
     </script>
 </body>
 </html>
-
-<link rel="manifest" href="manifest.json"> 
-
-<meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=Miuxoo+App">
-<meta property="og:title" content="Miuxoo Web App">

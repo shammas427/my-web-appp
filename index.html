@@ -141,3 +141,55 @@
   <textarea name="message" required></textarea>
   <button type="submit">Submit Form</button>
 </form>
+
+<div class="card">
+    <h3>Contact Me</h3>
+    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        
+        <input type="hidden" name="access_key" value="b1c31134-8e32-4c8a-bdeb-b86ba06e5495">
+        
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+        
+        <button type="submit" id="submitBtn">Send Message</button>
+    </form>
+</div>
+
+<script>
+    // ... (Keep your existing counter and theme logic here) ...
+
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    contactForm.addEventListener('submit', function() {
+        // Disable the button to prevent double-clicks
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
+        submitBtn.style.cursor = "not-allowed";
+        
+        // Change text to show activity
+        submitBtn.innerHTML = `
+            <span style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                Sending... <div class="spinner"></div>
+            </span>
+        `;
+    });
+</script>
+
+<style>
+    /* Adding a simple CSS spinner */
+    .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ffffff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>

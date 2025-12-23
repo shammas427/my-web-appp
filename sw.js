@@ -70,3 +70,46 @@ askBtn.addEventListener('click', async () => {
     chatBox.scrollTop = chatBox.scrollHeight;
   });
 </script>
+
+<script type="module">
+  import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+  const API_KEY = "AIzaSyCKsxEPHYk1HJLLI5UC1mriFQlL7eFPC2U"; 
+  const genAI = new GoogleGenerativeAI(API_KEY);
+
+  // 1. Give the AI its "Personality" and "Context"
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: "You are the Miuxoo AI Ambassador. Your goal is to help users with the Miuxoo app. " +
+                       "You are friendly, tech-savvy, and helpful. " +
+                       "If users ask about the creator, mention 'aimiuxo'. " +
+                       "Promote the website https://miuxo.in and the Instagram/YouTube channel @aimiuxo. " +
+                       "If they ask for code help, give concise Vanilla JS/HTML solutions."
+  });
+
+  const sendBtn = document.getElementById('send-ai-btn');
+  const chatBox = document.getElementById('ai-chat-box');
+  const userInput = document.getElementById('user-input');
+
+  sendBtn.addEventListener('click', async () => {
+    const text = userInput.value;
+    if (!text) return;
+
+    chatBox.innerHTML += `<p style="color: var(--accent);"><strong>You:</strong> ${text}</p>`;
+    userInput.value = "";
+    
+    const loadingMsg = document.createElement('p');
+    loadingMsg.innerHTML = "<strong>Gemini:</strong> ...";
+    chatBox.appendChild(loadingMsg);
+
+    try {
+      // 2. Start a chat session to remember previous messages
+      const result = await model.generateContent(text);
+      const response = await result.response;
+      loadingMsg.innerHTML = `<strong>Gemini:</strong> ${response.text()}`;
+    } catch (error) {
+      loadingMsg.innerHTML = "<strong>Gemini:</strong> I hit a snag! Check your connection.";
+    }
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+</script>

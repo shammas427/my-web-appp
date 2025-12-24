@@ -1,3 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miuxoo | Official</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --card-bg: #f8fafc;
+            --text: #0f172a;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --border: #334155;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { width: 100%; max-width: 400px; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        h2, h3 {
+            font-size: 1.3rem;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+
 <div class="container">
 
     <div class="card" style="border-top: 5px solid var(--accent);">
@@ -5,7 +95,7 @@
         <p style="font-weight: bold; color: var(--accent);">ᴏꜰꜰɪᴄɪᴀʟ ʙʀᴀɴᴅ ʜᴜʙ</p>
         <p>ꜱʜᴏᴘ ᴏɴʟɪɴᴇ ᴀᴛ ᴍɪᴜxᴏ ɪɴᴅɪᴀ</p>
         <a href="https://miuxo.in" target="_blank" style="text-decoration: none;">
-            <button style="background: var(--accent); border: 2px solid white; box-shadow: 0 4px 0 #1e40af;">
+            <button style="background: var(--accent); color: white; box-shadow: 0 4px 0 #1e40af;">
                 🌐 ᴠɪꜱɪᴛ ᴍʏ ᴡᴇʙꜱɪᴛᴇ
             </button>
         </a>
@@ -15,7 +105,7 @@
         <h2 style="letter-spacing: 1px;">ꜱʜᴏᴘɪꜰʏ</h2>
         <p>ᴘʀᴇᴍɪᴜᴍ ᴅɪɢɪᴛᴀʟ ꜱᴛᴏʀᴇ ʙᴜɪʟᴅᴇʀ</p>
         <a href="https://www.shopify.com/" target="_blank" style="text-decoration: none;">
-            <button style="background: #95bf47; border: none; box-shadow: 0 4px 0 #5e8e3e;">
+            <button style="background: #95bf47; color: white; box-shadow: 0 4px 0 #5e8e3e;">
                 🛍️ ꜱʜᴏᴘɪꜰʏ ᴡᴇʙꜱɪᴛᴇ
             </button>
         </a>
@@ -25,7 +115,7 @@
         <h2 style="letter-spacing: 1px;">ꜱᴜᴘᴇʀᴘʀᴏꜰɪʟᴇ</h2>
         <p>ɪɴꜱᴛᴀɢʀᴀᴍ ᴀᴜᴛᴏᴍᴀᴛɪᴏɴ & ʟɪɴᴋꜱ</p>
         <a href="https://superprofile.bio/aimiuxo" target="_blank" style="text-decoration: none;">
-            <button style="background: #000000; border: 1px solid #333; box-shadow: 0 4px 0 #222;">
+            <button style="background: #000000; color: white; border: 1px solid #333; box-shadow: 0 4px 0 #222;">
                 🚀 ꜱᴜᴘᴇʀᴘʀᴏꜰɪʟᴇ ᴡᴇʙꜱɪᴛᴇ
             </button>
         </a>
@@ -35,26 +125,26 @@
         <h2 style="letter-spacing: 1px;">ᴠᴇᴇᴅ ᴀɪ</h2>
         <p>ꜰʀᴇᴇ ᴀɪ ᴠɪᴅᴇᴏ ᴄʀᴇᴀᴛɪᴏɴ ᴛᴏᴏʟꜱ</p>
         <a href="https://www.veed.io/tools/ai-video" target="_blank" style="text-decoration: none;">
-            <button style="background: linear-gradient(90deg, #7c3aed 0%, #2563eb 100%); border: none;">
+            <button style="background: linear-gradient(90deg, #7c3aed 0%, #2563eb 100%); color: white;">
                 🎬 ᴠᴇᴇᴅ ᴀɪ ᴡᴇʙꜱɪᴛᴇ
             </button>
         </a>
     </div>
 
-   <div class="card" style="border: 1px dashed var(--accent);">
-    <h3>ᴊᴏɪɴ ᴛʜᴇ ᴄᴏᴍᴍᴜɴɪᴛʏ</h3>
-    <p>ꜰᴏʟʟᴏᴡ ꜰᴏʀ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇꜱ</p>
-    
-    <div class="social-grid">
-        <a href="https://www.youtube.com/@aimiuxo" target="_blank" style="text-decoration: none;">
-            <button style="background: #FF0000; margin: 0;">ʏᴏᴜᴛᴜʙᴇ</button>
-        </a>
-        <a href="https://www.instagram.com/aimiuxo/" target="_blank" style="text-decoration: none;">
-            <button style="background: #E4405F; margin: 0;">ɪɴꜱᴛᴀɢʀᴀᴍ</button>
-        </a>
+    <div class="card" style="border: 1px dashed var(--accent);">
+        <h3>ᴊᴏɪɴ ᴛʜᴇ ᴄᴏᴍᴍᴜɴɪᴛʏ</h3>
+        <p>ꜰᴏʟʟᴏᴡ ꜰᴏʀ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇꜱ</p>
+        <div class="social-grid">
+            <a href="https://www.youtube.com/@aimiuxo" target="_blank" style="text-decoration: none;">
+                <button style="background: #FF0000; color: white; margin: 0;">ʏᴏᴜᴛᴜʙᴇ</button>
+            </a>
+            <a href="https://www.instagram.com/aimiuxo/" target="_blank" style="text-decoration: none;">
+                <button style="background: #E4405F; color: white; margin: 0;">ɪɴꜱᴛᴀɢʀᴀᴍ</button>
+            </a>
+        </div>
     </div>
+
 </div>
 
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2563eb">
-<link rel="apple-touch-icon" href="icon-192.png">
+</body>
+</html>

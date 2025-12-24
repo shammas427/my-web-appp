@@ -38,6 +38,7 @@
             overflow-x: hidden;
         }
 
+        /* 📦 Container Animation */
         .container { 
             width: 100%; 
             max-width: 400px; 
@@ -119,6 +120,12 @@
             color: white;
             border: none;
         }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
     </style>
 </head>
 <body>
@@ -177,12 +184,11 @@
 <script>
     const ACCESS_CODE = "MIUXO2025"; 
 
-    // --- PWA LOGIC ---
+    // 1. PWA Logic: Install Prompt Handling
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // Show the install card if user is logged in
         if(localStorage.getItem('miuxo_verified') === 'true') {
             document.getElementById('install-banner').style.display = 'block';
         }
@@ -199,13 +205,14 @@
         }
     }
 
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js');
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
         });
     }
 
-    // --- LOGIN LOGIC ---
+    // 2. Login Logic
     function checkPass() {
         const input = document.getElementById('pass-input').value;
         if (input === ACCESS_CODE) {
@@ -226,7 +233,6 @@
         document.getElementById('login-overlay').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
         localStorage.setItem('miuxo_verified', 'true');
-        // Check if we should show install banner after login
         if(deferredPrompt) document.getElementById('install-banner').style.display = 'block';
     }
 
@@ -235,6 +241,7 @@
         location.reload();
     }
 
+    // Auto-login Check
     window.onload = () => {
         if (localStorage.getItem('miuxo_verified') === 'true') {
             document.getElementById('login-overlay').style.display = 'none';
@@ -242,14 +249,6 @@
         }
     };
 </script>
-
-<style>
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-10px); }
-        75% { transform: translateX(10px); }
-    }
-</style>
 
 </body>
 </html>
